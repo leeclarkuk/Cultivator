@@ -1,0 +1,16 @@
+apiVersion: cultivator/v1
+kind: Module
+metadata:
+  name: database
+spec:
+  dependsOn: [network]
+  inputs:
+    region: ${vars.region}
+    replicas: ${vars.replicas}
+  watch:
+    - "src/**"
+  apply:
+    - mkdir -p "$CULTIVATOR_ROOT/.deployed/${environment}"
+    - echo "database replicas=${inputs.replicas} region=${inputs.region}" > "$CULTIVATOR_ROOT/.deployed/${environment}/${module.name}"
+  check: test -f "$CULTIVATOR_ROOT/.deployed/${environment}/${module.name}"
+  destroy: rm -f "$CULTIVATOR_ROOT/.deployed/${environment}/${module.name}"
