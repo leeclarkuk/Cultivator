@@ -1,0 +1,16 @@
+apiVersion: cultivator/v1
+kind: Config
+spec:
+  modules:
+    - modules/*
+  defaultEnvironment: staging
+  parallelism: 4
+  vars:
+    region: eu-west-2
+  environments:
+    staging:
+      vars:
+        replicas: 1
+    production:
+      vars:
+        replicas: 3
