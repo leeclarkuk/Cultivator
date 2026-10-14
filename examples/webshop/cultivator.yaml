@@ -6,7 +6,7 @@ spec:
   defaultEnvironment: staging
   parallelism: 4
   vars:
-    region: eu-west-2
+    site: primary
   environments:
     staging:
       vars:
