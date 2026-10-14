@@ -4,12 +4,12 @@ metadata:
   name: network
 spec:
   inputs:
-    region: ${vars.region}
+    site: ${vars.site}
     replicas: ${vars.replicas}
   watch:
     - "src/**"
   apply:
     - mkdir -p "$CULTIVATOR_ROOT/.deployed/${environment}"
-    - echo "network replicas=${inputs.replicas} region=${inputs.region}" > "$CULTIVATOR_ROOT/.deployed/${environment}/${module.name}"
+    - echo "network replicas=${inputs.replicas} site=${inputs.site}" > "$CULTIVATOR_ROOT/.deployed/${environment}/${module.name}"
   check: test -f "$CULTIVATOR_ROOT/.deployed/${environment}/${module.name}"
   destroy: rm -f "$CULTIVATOR_ROOT/.deployed/${environment}/${module.name}"

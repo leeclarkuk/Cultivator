@@ -102,7 +102,7 @@ def test_command_change_is_detected(chain):
 
 def test_input_change_reports_which_keys(ws):
     ws.write_config(environments={"dev": {"vars": {"n": 1}}})
-    ws.module("app", inputs={"replicas": "${vars.n}", "region": "x"})
+    ws.module("app", inputs={"replicas": "${vars.n}", "site": "x"})
     apply(ws)
     ws.write_config(environments={"dev": {"vars": {"n": 2}}})
     _, plan = plan_of(ws)

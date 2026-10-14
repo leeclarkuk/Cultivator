@@ -23,19 +23,19 @@ def test_find_root_fails_cleanly(tmp_path):
 
 def test_interpolation_and_environment_overrides(ws):
     ws.write_config(
-        vars={"region": "eu-west-2"},
+        vars={"site": "primary"},
         environments={"dev": {"vars": {"size": "small"}}, "prod": {"vars": {"size": "large"}}},
     )
     ws.module(
         "app",
-        inputs={"size": "${vars.size}", "region": "${vars.region}"},
+        inputs={"size": "${vars.size}", "site": "${vars.site}"},
         apply='deploy ${inputs.size} ${module.name} ${environment} "${HOME}"',
         overrides={"prod": {"inputs": {"size": "xlarge"}, "env": {"MODE": "${environment}"}}},
     )
     dev = load_workspace(ws.root, "dev").modules["app"]
     prod = load_workspace(ws.root, "prod").modules["app"]
     assert dev.apply == ('deploy small app dev "${HOME}"',)
-    assert prod.inputs["size"] == "xlarge" and prod.inputs["region"] == "eu-west-2"
+    assert prod.inputs["size"] == "xlarge" and prod.inputs["site"] == "primary"
     assert prod.env == {"MODE": "prod"}
 
 

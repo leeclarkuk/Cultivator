@@ -4,6 +4,8 @@ Cultivator deploys modules from declarative manifests, the way a GitOps controll
 
 It is a small Python CLI with one dependency (PyYAML). It does not know what your modules deploy. Each module supplies its own commands (`kubectl`, `terraform`, `make`, a shell script), and Cultivator decides when to run them.
 
+Cultivator has no cloud provider, platform or tool built in. Anything with a command line works: Terraform or OpenTofu, Pulumi, Ansible, Helm, `kubectl`, `az`, `gcloud`, `aws`, Docker, or your own scripts. Mix them freely in one workspace.
+
 ## Install
 
 ```sh
@@ -35,7 +37,7 @@ spec:
   parallelism: 4
   stateDir: .cultivator/state   # default
   vars:                         # shared by all environments
-    region: eu-west-2
+    site: primary
   environments:
     staging:
       vars: { replicas: 1 }
